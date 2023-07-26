@@ -1,9 +1,6 @@
 package br.com.cnaga.strproducer.services;
 
-import java.util.concurrent.CompletableFuture;
-
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -17,7 +14,9 @@ public class StringProducerService {
 	private final KafkaTemplate<String, String> kafkaTemplate;
 	
 	public void sendMessage(String message) {
-		 
+		log.info("Send message {}", message);
+		kafkaTemplate.send("str-topic", message);
+		/*
         CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send("str-topic", message);
  
         future.whenComplete((result, ex) -> {
@@ -31,5 +30,6 @@ public class StringProducerService {
                     result.getRecordMetadata().offset()
             );
         });
+        */
     }
 }
